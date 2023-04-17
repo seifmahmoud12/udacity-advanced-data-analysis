@@ -1,1 +1,54 @@
 
+1-
+SELECT al.albumid, al.title, SUM(i.unitprice * i.quantity) AS Sales
+FROM Artist a
+JOIN Album al
+ON a.artistid = al.artistid
+JOIN Track t
+ON al.albumid = t.albumid
+JOIN InvoiceLine i
+ON i.trackid = t.trackid
+GROUP BY al.albumid
+ORDER BY Sales DESC
+LIMIT 10;
+
+
+
+2-
+SELECT mt.name, COUNT(DISTINCT c.customerid) Customers
+FROM customer c
+JOIN invoice i
+ON c.customerid = i.customerid
+JOIN invoiceline iv
+ON i.invoiceid = iv.invoiceid
+JOIN Track t
+ON iv.trackid = t.trackid
+JOIN MediaType mt
+ON mt.mediatypeid = t.mediatypeid
+GROUP BY mt.name
+ORDER BY c.customerid DESC;
+
+
+3-
+
+SELECT a.ArtistId, a.Name, count(*) AS NO_songs
+FROM Artist a
+JOIN Album al
+ON  a.ArtistId = al.ArtistId
+JOIN Track t
+ON  t.AlbumId = al.AlbumId
+JOIN Genre g
+ON  g.GenreId = t.GenreId
+WHERE g.Name = 'Metal'
+GROUP by a.ArtistId, a.Name
+ORDER BY NO_songs DESC
+LIMIT 10;
+
+4-
+SELECT C.FirstName, sum(total) AS total
+FROM Customer C
+JOIN Invoice I
+ON  C.CustomerId = I.CustomerId
+GROUP BY C.FirstName
+ORDER BY total DESC
+LIMIT 10;
